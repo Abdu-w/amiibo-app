@@ -7,23 +7,42 @@ export default class GameForm extends Component {
   state = { 
     id: "",
     comment : "",
-    thread : []
+    thread : [],
+    editing: false,
    }
 
    addComment = (e) =>  {
      this.setState({
-      id: Math.random() * 100000000000 + 1,
       comment: e.target.value
      })
    }
+
    submitComment = (e) => {
     e.preventDefault()
+    const { editing, thread, id } = this.state
+    let allComments = thread
     const data ={
-      "id":this.state.id,
+      "id": editing ? id : Math.random() * 100000000000 + 1,
       "comments": this.state.comment
     }
-    
-    axios.post('/api_v2/comment', data)
+
+    if(editing) {
+      allComments = allComments.map(c => {
+        if (c.id === id) return data
+        return c
+      })
+      axios.put(`/api_v2/comment/${id}`, data)
+    } else {
+      allComments = [...thread, data]
+      axios.post('/api_v2/comment', data)
+    }
+
+    this.setState({
+      id: "",
+      comment : "",
+      thread : allComments,
+      editing: false,
+    })
    }
 
    async componentDidMount() {
@@ -32,14 +51,13 @@ export default class GameForm extends Component {
       this.setState({thread: resp.data })
     })
   }
-  editComment = (id) => {
-    console.log(id)
-    const data = {
-      "id":id,
-      "comments":this.state.comment
-    }
-    console.log(data.id,'hdjlhjl')
-    axios.put(`/api_v2/comment/${id}`, data)
+
+  editComment = (id, comment) => {
+    this.setState({
+      id,
+      comment,
+      editing: true,
+    })
   }
 
 
@@ -47,22 +65,19 @@ export default class GameForm extends Component {
     console.log(this.state.thread)
     return (
       <div className="game-form">
-        {
-          this.state.thread.length   ?
-          
-            this.state.thread.map(c  => 
-            <button  onClick={() => this.editComment(c.id)}>
-              <p>
-                {c.comments} 
-              </p>
-            </button> )
-          :null
-        }
+        <h2>Comments</h2>
         <form onSubmit={this.submitComment}>
-          <textarea type='text' value={this.state.comment} onChange={this.addComment} />
+          <textarea type='text' placeholder="write a comment" value={this.state.comment} onChange={this.addComment} />
           <button type='submit'>submit</button>
         </form>
-
+        {
+          this.state.thread.length   ?
+            this.state.thread.map(c  => 
+              <p key={c.id} className="comment" onClick={() => this.editComment(c.id, c.comments)}>
+                {c.comments} 
+              </p>)
+          :null
+        }
       </div>    
     );
   }
