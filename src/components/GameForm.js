@@ -22,7 +22,7 @@ export default class GameForm extends Component {
       "id":this.state.id,
       "comments": this.state.comment
     }
-    
+     
     axios.post('/api_v2/comment', data)
    }
 
