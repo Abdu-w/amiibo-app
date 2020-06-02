@@ -19,7 +19,7 @@ export default class Games extends Component{
   handleSubmit = (event) => {
     const { amiiboChar } = this.state
     try {
-       axios.get(`https://www.amiiboapi.com/api/amiibo/?character=${amiiboChar}p`)
+       axios.get(`https://www.amiiboapi.com/api/amiibo/?character=${amiiboChar}`)
         .then(resp => {
           this.setState({amiiboGames: resp.data.amiibo})
           console.log(resp)
