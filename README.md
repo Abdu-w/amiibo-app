@@ -1,6 +1,6 @@
 # Amiibo-game-app
   
-
+ 
 ## Technologies Used:
 #### Axios 
 #### React.js
