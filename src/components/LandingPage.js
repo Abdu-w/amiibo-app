@@ -1,6 +1,6 @@
 import React from 'react';
-
-
+ 
+ 
 function LandingPage(){
   return(
     <div className='landing'>
@@ -10,4 +10,4 @@ function LandingPage(){
   )
 }
 
-export default LandingPage
+export default LandingPage 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-
-
+ 
+ 
 
 export default class GameForm extends Component {
   state = { 
@@ -43,6 +43,7 @@ export default class GameForm extends Component {
       thread : allComments,
       editing: false,
     })
+     
    }
 
    async componentDidMount() {
@@ -82,5 +83,6 @@ export default class GameForm extends Component {
     );
   }
 }
+
 
 
