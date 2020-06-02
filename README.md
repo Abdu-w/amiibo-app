@@ -23,7 +23,7 @@ Propsoe for amiibo collectors who need some organization
 ![Main Page](./Wireframe/wireframe.png)
 
 ## Link:
-
+https://capstone-82810.web.app
 
 
 
